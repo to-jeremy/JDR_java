@@ -1,7 +1,6 @@
 # Jeu de rôle en Java
 
-
-## Première version du jeu de rôle :
+## Première version du jeu de rôle (version du 10/03/2023) :
     
 > ### Personnages
 

@@ -68,7 +68,7 @@ public class Personnage {
         this.mana = mana;
     }
 
-    public int getAttaque() {
+    private int calculerBonusAttaque() {
         int attaqueBonus = 0;
         if (arme != null) {
             attaqueBonus += arme.getAttaqueBonus();
@@ -78,6 +78,11 @@ public class Personnage {
                 attaqueBonus += ((Arme) equipement).getAttaqueBonus();
             }
         }
+        return attaqueBonus;
+    }
+
+    public int getAttaque() {
+        int attaqueBonus = calculerBonusAttaque();
         return attaque + attaqueBonus;
     }
 

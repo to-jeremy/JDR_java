@@ -156,13 +156,19 @@ public class Main {
                             Design.titreAffichage_3("C'est au tour de " + personnage.getNomPerso() + " :");
                             Design.titreAffichage_2(personnage.getNomPerso() + "\nHP : " + personnage.getHp() + "/" + personnage.getMaxHp());
                             Design.titreAffichage_4("Que voulez-vous faire ?");
-                            System.out.println("1. Attaquer");
-                            System.out.println("2. Utiliser un objet");
-                            System.out.println("3. Quitter le donjon");
+                            System.out.println("1. Afficher les informations du personnage");
+                            System.out.println("2. Attaquer");
+                            System.out.println("3. Utiliser un objet");
+                            System.out.println("4. Quitter le donjon");
                             int choice = scanner.nextInt();
                             scanner.nextLine();
                             Design.effacerConsole();
                             if (choice == 1) {
+                                personnage.afficherInfosPersonnage();
+
+                                scanner.nextLine();
+                                Design.effacerConsole();
+                            } else if (choice == 2) {
 
                                 int dommage = personnage.getAttaque() - ennemi.getDefense();
                                 if (dommage < 0) {
@@ -181,7 +187,7 @@ public class Main {
                                     scanner.nextLine();
                                     Design.effacerConsole();
                                 }
-                            } else if (choice == 2) {
+                            } else if (choice == 3) {
                                 if (personnage.getObjets().isEmpty()) {
                                     Design.effacerConsole();
                                     Design.titreAffichage_2("L'inventaire de " + personnage.getNomPerso() + " est vide !");
@@ -209,7 +215,7 @@ public class Main {
                                     scanner.nextLine();
                                     Design.effacerConsole();
                                 }
-                            } else if (choice == 3) {
+                            } else if (choice == 4) {
                                 Design.titreAffichage_2("Merci d'avoir joué au jeu de rôle du donjon !");
 
                                 System.exit(0);

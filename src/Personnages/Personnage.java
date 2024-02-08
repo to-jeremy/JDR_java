@@ -20,6 +20,7 @@ public class Personnage {
     private int mana;
     private Arme arme;
     private Inventaire inventaire;
+    private String classe;
 
     public Personnage(String nomPerso, int maxHp, int maxMana, int attaque, int defense) {
         this.nomPerso = nomPerso;
@@ -184,5 +185,26 @@ public class Personnage {
             }
         }
         getObjets().remove(potion);
+    }
+
+    public void afficherInfosPersonnage() {
+        Design.titreAffichage_2("Informations sur " + getNomPerso());
+        System.out.println("Classe : " + getClass().getSimpleName());
+        System.out.println("HP : " + getHp() + "/" + getMaxHp());
+        System.out.println("Nombre de potions restantes : " + getObjets().size());
+        System.out.println("Équipements :");
+        if (getArme() != null) {
+            System.out.println("- Arme équipée : " + getArme().getNomArme());
+        } else {
+            System.out.println("- Aucune arme équipée");
+        }
+        for (Equipement equipement : getEquipements()) {
+            if (equipement instanceof Arme) {
+                System.out.println("- Arme dans l'inventaire : " + equipement.getNomEquipement());
+            } else {
+                System.out.println("- Autre équipement : " + equipement.getNomEquipement());
+            }
+        }
+        Design.separateurAffichage(30);
     }
 }

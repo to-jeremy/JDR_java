@@ -152,78 +152,89 @@ public class Main {
                         }
                         if (!personnage.estMort()) {
                             Ennemi ennemi = ennemis.get(0);
-                            Design.titreAffichage_3(ennemi.getNomEnnemi() + "\nHP : " + ennemi.getHp() + "/" + ennemi.getMaxHp());
-                            Design.titreAffichage_3("C'est au tour de " + personnage.getNomPerso() + " :");
-                            Design.titreAffichage_2(personnage.getNomPerso() + "\nHP : " + personnage.getHp() + "/" + personnage.getMaxHp());
-                            Design.titreAffichage_4("Que voulez-vous faire ?");
-                            System.out.println("1. Afficher les informations du personnage");
-                            System.out.println("2. Attaquer");
-                            System.out.println("3. Utiliser un objet");
-                            System.out.println("4. Quitter le donjon");
-                            int choice = scanner.nextInt();
-                            scanner.nextLine();
-                            Design.effacerConsole();
-                            if (choice == 1) {
-                                personnage.afficherInfosPersonnage();
 
+                            boolean actionEffectuee = false;
+
+                            while (!actionEffectuee) {
+
+                                Design.titreAffichage_3(ennemi.getNomEnnemi() + "\nHP : " + ennemi.getHp() + "/" + ennemi.getMaxHp());
+                                Design.titreAffichage_3("C'est au tour de " + personnage.getNomPerso() + " :");
+                                Design.titreAffichage_2(personnage.getNomPerso() + "\nHP : " + personnage.getHp() + "/" + personnage.getMaxHp());
+                                Design.titreAffichage_4("Que voulez-vous faire ?");
+                                System.out.println("1. Afficher les informations du personnage");
+                                System.out.println("2. Attaquer");
+                                System.out.println("3. Utiliser un objet");
+                                System.out.println("4. Quitter le donjon");
+                                int choice = scanner.nextInt();
                                 scanner.nextLine();
                                 Design.effacerConsole();
-                            } else if (choice == 2) {
-
-                                int dommage = personnage.getAttaque() - ennemi.getDefense();
-                                if (dommage < 0) {
-                                    dommage = 0;
-                                }
-                                Design.titreAffichage_2(personnage.getNomPerso() + " attaque " + ennemi.getNomEnnemi() + " et lui inflige " + dommage + " points de dégâts");
-                                ennemi.subirDommage(dommage);
-
-                                scanner.nextLine();
-                                Design.effacerConsole();
-
-                                if (ennemi.estMort()) {
-                                    Design.titreAffichage_2(ennemi.getNomEnnemi() + " est mort !");
-                                    ennemis.remove(0);
+                                if (choice == 1) {
+                                    personnage.afficherInfosPersonnage();
 
                                     scanner.nextLine();
                                     Design.effacerConsole();
-                                }
-                            } else if (choice == 3) {
-                                if (personnage.getObjets().isEmpty()) {
-                                    Design.effacerConsole();
-                                    Design.titreAffichage_2("L'inventaire de " + personnage.getNomPerso() + " est vide !");
-                                    scanner.nextLine();
-                                    Design.effacerConsole();
-                                    break;
-                                } else {
-                                    Design.titreAffichage_2("Quel objet voulez-vous utiliser ?");
-                                    for (int i = 0; i < personnage.getObjets().size(); i++) {
-                                        System.out.println((i + 1) + ". " + personnage.getObjets().get(i).getNomObjet());
+                                } else if (choice == 2) {
+
+                                    int dommage = personnage.getAttaque() - ennemi.getDefense();
+                                    if (dommage < 0) {
+                                        dommage = 0;
                                     }
-                                }
-                                int objetChoice = scanner.nextInt();
-                                scanner.nextLine();
-                                Design.effacerConsole();
-                                Objet objet = personnage.getObjets().get(objetChoice - 1);
-                                if (objet instanceof Potion) {
-                                    personnage.utilisePotion((Potion) objet);
+                                    Design.titreAffichage_2(personnage.getNomPerso() + " attaque " + ennemi.getNomEnnemi() + " et lui inflige " + dommage + " points de dégâts");
+                                    ennemi.subirDommage(dommage);
 
                                     scanner.nextLine();
                                     Design.effacerConsole();
+
+                                    actionEffectuee = true;
+
+                                    if (ennemi.estMort()) {
+                                        Design.titreAffichage_2(ennemi.getNomEnnemi() + " est mort !");
+                                        ennemis.remove(0);
+
+                                        scanner.nextLine();
+                                        Design.effacerConsole();
+                                    }
+                                } else if (choice == 3) {
+                                    if (personnage.getObjets().isEmpty()) {
+                                        Design.effacerConsole();
+                                        Design.titreAffichage_2("L'inventaire de " + personnage.getNomPerso() + " est vide !");
+                                        scanner.nextLine();
+                                        Design.effacerConsole();
+                                        break;
+                                    } else {
+                                        Design.titreAffichage_2("Quel objet voulez-vous utiliser ?");
+                                        for (int i = 0; i < personnage.getObjets().size(); i++) {
+                                            System.out.println((i + 1) + ". " + personnage.getObjets().get(i).getNomObjet());
+                                        }
+                                    }
+                                    int objetChoice = scanner.nextInt();
+                                    scanner.nextLine();
+                                    Design.effacerConsole();
+                                    Objet objet = personnage.getObjets().get(objetChoice - 1);
+
+                                    actionEffectuee = true;
+
+                                    if (objet instanceof Potion) {
+                                        personnage.utilisePotion((Potion) objet);
+
+                                        scanner.nextLine();
+                                        Design.effacerConsole();
+                                    } else {
+                                        Design.titreAffichage_2("Cet objet ne peut pas être utilisé en combat !");
+
+                                        scanner.nextLine();
+                                        Design.effacerConsole();
+                                    }
+                                } else if (choice == 4) {
+                                    Design.titreAffichage_2("Merci d'avoir joué au jeu de rôle du donjon !");
+
+                                    System.exit(0);
                                 } else {
-                                    Design.titreAffichage_2("Cet objet ne peut pas être utilisé en combat !");
+                                    Design.titreAffichage_2("Choix invalide, passez votre tour !");
 
                                     scanner.nextLine();
                                     Design.effacerConsole();
                                 }
-                            } else if (choice == 4) {
-                                Design.titreAffichage_2("Merci d'avoir joué au jeu de rôle du donjon !");
-
-                                System.exit(0);
-                            } else {
-                                Design.titreAffichage_2("Choix invalide, passez votre tour !");
-
-                                scanner.nextLine();
-                                Design.effacerConsole();
                             }
                         }
                     }

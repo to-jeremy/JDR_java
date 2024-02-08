@@ -20,7 +20,6 @@ public class Personnage {
     private int mana;
     private Arme arme;
     private Inventaire inventaire;
-    private String classe;
 
     public Personnage(String nomPerso, int maxHp, int maxMana, int attaque, int defense) {
         this.nomPerso = nomPerso;

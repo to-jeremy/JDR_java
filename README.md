@@ -83,3 +83,5 @@
   - Choisir un personnage existant
   - Créer un nouveau personnage
   - Supprimer un personnage existant
+
+- **Création d'une petite map sur le jeu (en cours de développement)**

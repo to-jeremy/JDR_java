@@ -1,13 +1,8 @@
-import Classes.*;
-import Design.*;
-import Donjon.*;
-import Donjon.CreationDonjon.DonjonDesTenebres;
-import Ennemis.*;
-import Equipements.*;
-import Objets.*;
-import Objets.Potions.*;
-import Personnages.*;
-import Salles.*;
+import Design.Design;
+import Equipements.Arme;
+import Objets.Potions.Potion;
+import Objets.Potions.PotionType;
+import Personnages.Personnage;
 
 import java.util.ArrayList;
 import java.util.Scanner;

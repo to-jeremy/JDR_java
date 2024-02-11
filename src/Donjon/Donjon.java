@@ -25,7 +25,7 @@ public class Donjon {
         return salles;
     }
 
-    public Equipement getReward() {
+    public Equipement getRecompense() {
         return reward;
     }
 }

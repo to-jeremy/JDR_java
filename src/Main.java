@@ -12,229 +12,9 @@ import Salles.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static Jeu.MenuPrincipal.menuPrincipal;
+
 public class Main {
-
-    public static void creerNouveauPersonnage(Scanner scanner, ArrayList<Personnage> personnages) {
-        Design.titreAffichage_3("Création d'un nouveau personnage");
-
-        String nomPerso = "";
-        while (nomPerso.trim().isEmpty()) {
-            Design.titreAffichage_2("Nom du personnage : ");
-            nomPerso = scanner.nextLine().trim(); // Trim pour supprimer les espaces avant et après
-
-            if (nomPerso.isEmpty()) {
-                Design.effacerConsole();
-                Design.titreAffichage_2("Le nom ne peut pas être vide !");
-                scanner.nextLine(); // Pour attendre que l'utilisateur appuie sur entrée
-                Design.effacerConsole();
-            }
-        }
-
-        String[] classes = {"Guerrier", "Mage", "Voleur"};
-
-        int choixClasse = 0;
-        while (choixClasse < 1 || choixClasse > classes.length) {
-            Design.effacerConsole();
-            Design.titreAffichage_2("Choisissez une classe pour votre personnage :");
-
-            for (int i = 0; i < classes.length; i++) {
-                System.out.println((i + 1) + ". " + classes[i]);
-            }
-            Design.separateurAffichage(30);
-
-            System.out.print("Choix : ");
-            String input = scanner.nextLine().trim();
-            Design.effacerConsole();
-
-            if (!input.isEmpty()) {
-                // Si l'entrée n'est pas vide, on essaie de la convertir en entier
-                try {
-                    choixClasse = Integer.parseInt(input);
-                    if (choixClasse < 1 || choixClasse > classes.length) {
-                        Design.titreAffichage_1("Choix invalide. Veuillez choisir un numéro entre 1 et " + classes.length + ".");
-                        scanner.nextLine();
-                        Design.effacerConsole();
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Veuillez entrer un numéro valide.");
-                }
-            } else {
-                Design.effacerConsole();
-                Design.titreAffichage_1("Vous devez entrer un numéro de classe.");
-                scanner.nextLine();
-            }
-        }
-
-        String nomClasse = classes[choixClasse - 1];
-
-        Personnage personnage = null;
-        switch (choixClasse) {
-            case 1:
-                personnage = new Guerrier(nomPerso, 200, 10, 20, 12);
-                break;
-            case 2:
-                personnage = new Mage(nomPerso, 200, 10, 20, 12);
-                break;
-            case 3:
-                personnage = new Voleur(nomPerso, 200, 10, 20, 12);
-                break;
-            default:
-                System.out.println("Classe invalide. Le personnage sera un guerrier par défaut.");
-                personnage = new Guerrier(nomPerso, 200, 10, 20, 12);
-                break;
-        }
-        personnages.add(personnage);
-
-        Design.effacerConsole();
-        Design.titreAffichage_1("Vous avez choisi la classe " + nomClasse + " pour le personnage " + nomPerso + ".");
-
-        scanner.nextLine();
-        Design.effacerConsole();
-    }
-
-    public static void choisirPersonnage(Scanner scanner, ArrayList<Personnage> personnages) {
-        while (true) {
-            Design.titreAffichage_1("Choisir un personnage existant");
-
-            if (personnages.isEmpty()) {
-                Design.titreAffichage_6("Aucun personnage disponible.");
-
-                scanner.nextLine();
-                Design.effacerConsole();
-
-                return;
-            }
-
-            Design.titreAffichage_4("Liste des personnages :");
-            for (int i = 0; i < personnages.size(); i++) {
-                System.out.println((i + 1) + ". " + personnages.get(i).getNomPerso());
-            }
-
-            Design.titreAffichage_2("Choisissez un personnage (ou tapez 0 pour revenir au menu principal) : ");
-            int choix = scanner.nextInt();
-            scanner.nextLine(); // Pour consommer la fin de ligne après nextInt()
-
-            if (choix == 0) {
-                Design.effacerConsole();
-
-                return; // Revenir au menu principal
-            }
-
-            if (choix >= 1 && choix <= personnages.size()) {
-                Personnage personnageChoisi = personnages.get(choix - 1);
-
-                Design.effacerConsole();
-                Design.titreAffichage_2("Vous avez choisi le personnage " + personnageChoisi.getNomPerso() + " !");
-                scanner.nextLine();
-                Design.effacerConsole();
-
-                // Maintenant vous pouvez faire quelque chose avec ce personnage, comme jouer avec lui.
-                return;
-            } else {
-                Design.effacerConsole();
-                Design.titreAffichage_2("Choix invalide.");
-                scanner.nextLine();
-                Design.effacerConsole();
-            }
-        }
-    }
-
-    public static void supprimerPersonnage(Scanner scanner, ArrayList<Personnage> personnages) {
-        while (true) {
-            Design.titreAffichage_1("Supprimer un personnage existant");
-
-            if (personnages.isEmpty()) {
-                Design.titreAffichage_6("Aucun personnage disponible.");
-
-                scanner.nextLine();
-                Design.effacerConsole();
-
-                return;
-            }
-
-            Design.titreAffichage_4("Liste des personnages :");
-            for (int i = 0; i < personnages.size(); i++) {
-                System.out.println((i + 1) + ". " + personnages.get(i).getNomPerso());
-            }
-
-            Design.titreAffichage_2("Choisissez un personnage à supprimer (ou tapez 0 pour revenir au menu principal) : ");
-            int choix = scanner.nextInt();
-            scanner.nextLine();
-
-            if (choix == 0) {
-                Design.effacerConsole();
-
-                return;
-            }
-
-            if (choix >= 1 && choix <= personnages.size()) {
-                Personnage personnageSupprime = personnages.remove(choix - 1);
-
-                Design.effacerConsole();
-                Design.titreAffichage_2(personnageSupprime.getNomPerso() + " a été supprimé avec succès !");
-                scanner.nextLine();
-                Design.effacerConsole();
-
-                return;
-            } else {
-                Design.effacerConsole();
-                Design.titreAffichage_2("Choix invalide. Veuillez choisir un numéro valide.");
-                scanner.nextLine();
-                Design.effacerConsole();
-            }
-        }
-    }
-
-    public static void menuPrincipal(Scanner scanner, ArrayList<Personnage> personnages) {
-        boolean continuer = true;
-        while (continuer) {
-            Design.titreAffichage_5("Le Royaume chez Darkofu");
-
-            Design.titreAffichage_1("Menu Principal");
-            System.out.println("1. Créer un nouveau personnage");
-            System.out.println("2. Choisir un personnage existant");
-            System.out.println("3. Supprimer un personnage existant");
-            System.out.println("4. Quitter");
-
-            Design.separateurAffichage(40);
-
-            int choix = scanner.nextInt();
-            scanner.nextLine(); // Pour consommer la fin de ligne après nextInt()
-
-            switch (choix) {
-                case 1:
-                    Design.effacerConsole();
-
-                    // Créer un nouveau personnage
-                    creerNouveauPersonnage(scanner, personnages);
-                    break;
-                case 2:
-                    // Choisir un personnage existant
-                    Design.effacerConsole();
-
-                    choisirPersonnage(scanner, personnages);
-                    break;
-                case 3:
-                    // Supprimer un personnage existant
-                    Design.effacerConsole();
-
-                    supprimerPersonnage(scanner, personnages);
-                    break;
-                case 4:
-                    Design.effacerConsole();
-
-                    // Quitter le menu principal
-                    Design.titreAffichage_2("Merci d'avoir joué au Royaume chez Darkofu !");
-
-                    System.exit(0);
-                default:
-                    System.out.println("Choix invalide. Veuillez choisir une option valide.");
-                    break;
-            }
-        }
-    }
-
-
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
 
@@ -245,72 +25,9 @@ public class Main {
             scanner.nextLine();
             Design.effacerConsole();
 
-            // Créer le donjon
-            Donjon donjon = DonjonDesTenebres.creerDonjon();
-            Arme reward = (Arme) donjon.getRecompense();
-
             // Créer l'équipe de personnages
             ArrayList<Personnage> personnages = new ArrayList<>();
             menuPrincipal(scanner, personnages);
-            /*Design.titreAffichage_5("Création de l'équipe de personnages !");
-
-            for (int i = 1; i <= 3; i++) {
-                Design.titreAffichage_2("Création du personnage " + i + " :");
-                System.out.print("Nom : ");
-                String nomPerso = scanner.nextLine();
-                while (nomPerso.trim().isEmpty()) {
-                    Design.effacerConsole();
-
-                    Design.titreAffichage_2("Le nom ne peut pas être vide !");
-                    scanner.nextLine();
-                    Design.effacerConsole();
-
-                    Design.titreAffichage_2("Création du personnage " + i + " :");
-                    System.out.print("Nom : ");
-                    nomPerso = scanner.nextLine();
-                }
-                Design.separateurAffichage(30);
-                System.out.print("Classe (Guerrier, Mage, Voleur) : ");
-                String nomClasse = scanner.nextLine();
-                Design.separateurAffichage(30);
-                Design.effacerConsole();
-                Personnage personnage = null;
-                switch (nomClasse.toLowerCase()) {
-                    case "guerrier":
-                        personnage = new Guerrier(nomPerso, 200, 10, 20, 12);
-                        Design.titreAffichage_1("Vous avez choisi la classe " + nomClasse + " pour le personnage " + i + ".");
-
-                        scanner.nextLine();
-                        Design.effacerConsole();
-
-                        break;
-                    case "mage":
-                        personnage = new Mage(nomPerso, 200, 10, 20, 12);
-                        Design.titreAffichage_1("Vous avez choisi la classe " + nomClasse + " pour le personnage " + i + ".");
-
-                        scanner.nextLine();
-                        Design.effacerConsole();
-
-                        break;
-                    case "voleur":
-                        personnage = new Voleur(nomPerso, 200, 10, 20, 12);
-                        Design.titreAffichage_1("Vous avez choisi la classe " + nomClasse + " pour le personnage " + i + ".");
-
-                        scanner.nextLine();
-                        Design.effacerConsole();
-
-                        break;
-                    default:
-                        Design.titreAffichage_1("Classe invalide, le personnage " + i + " sera un guerrier par défaut.");
-                        personnage = new Guerrier(nomPerso, 200, 10, 20, 12);
-
-                        scanner.nextLine();
-                        Design.effacerConsole();
-
-                        break;
-                }
-                personnages.add(personnage);
-            }*/
 
             //Equipements des personnages
             Arme epee = new Arme("Épée basique", 15, 0);
@@ -321,11 +38,14 @@ public class Main {
             personnages.get(0).ajouterObjet(potionMagique);
             //personnages.get(0).ajouterEquipement(epee);
 
-            personnages.get(1).equipArme(epee);
-            personnages.get(1).ajouterObjet(potionMagique);
+            // Quitter le jeu si aucun personnage n'a été créé
+            if (personnages.isEmpty()) {
+                Design.titreAffichage_2("Vous n'avez créé aucun personnage. Fin du jeu.");
+            }
 
-            //personnages.get(2).equipArme(epee);
-            personnages.get(2).ajouterObjet(potionMagique);
+            // Créer le donjon
+            /*Donjon donjon = DonjonDesTenebres.creerDonjon();
+            Arme reward = (Arme) donjon.getRecompense();
 
             // Parcourir le donjon
             Design.titreAffichage_1("Vous entrez dans le donjon !");
@@ -489,7 +209,7 @@ public class Main {
                         Design.titreAffichage_4("Objet " + (i + 1) + " : " + personnage.getObjets().get(i).getNomObjet());
                     }
                 }
-            }
+            }*/
             //scanner.close();
         } catch (Exception e) {
             e.printStackTrace();

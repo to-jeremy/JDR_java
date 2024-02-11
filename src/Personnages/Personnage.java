@@ -192,11 +192,13 @@ public class Personnage {
         System.out.println("HP : " + getHp() + "/" + getMaxHp());
         System.out.println("Nombre de potions restantes : " + getObjets().size());
         System.out.println("Équipements :");
+
         if (getArme() != null) {
             System.out.println("- Arme équipée : " + getArme().getNomArme());
         } else {
             System.out.println("- Aucune arme équipée");
         }
+
         for (Equipement equipement : getEquipements()) {
             if (equipement instanceof Arme) {
                 System.out.println("- Arme dans l'inventaire : " + equipement.getNomEquipement());

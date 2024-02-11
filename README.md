@@ -5,9 +5,15 @@
 > ### Personnages
 
 - Classes des personnages
-  - Guerrier
-  - Mage
-  - Voleur
+  - Version du 10/03/2023
+    - Guerrier
+    - Mage
+    - Voleur
+  - Version du 11/02/2023
+    - Archer
+    - Assassin
+    - Barbare
+    - Sorcier
 
 - Inventaire des personnages
 

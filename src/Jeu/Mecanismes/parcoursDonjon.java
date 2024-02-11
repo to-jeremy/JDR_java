@@ -17,6 +17,21 @@ import java.util.Scanner;
 
 public class parcoursDonjon {
     public static void parcourirDonjon(Scanner scanner, ArrayList<Personnage> personnages) {
+        // Obtenez le personnage actif
+        Personnage personnage = personnages.get(personnages.size() - 1);
+
+        // Obtenez la carte du personnage
+        Carte carte = personnage.getCarte();
+
+        // Vérifiez si le joueur est à l'entrée du donjon
+        if (carte.getCase(personnage.getPositionX(), personnage.getPositionY()) == 'D') {
+            Design.titreAffichage_5("Voici le donjon du jeu !");
+        } else {
+            // Si le joueur n'est pas à l'entrée du donjon, affichez un message
+            Design.titreAffichage_1("Vous devez vous déplacer vers l'entrée du donjon pour y accéder.");
+            return;
+        }
+
         // Créer le donjon
         Donjon donjon = DonjonDesTenebres.creerDonjon();
         Arme reward = (Arme) donjon.getRecompense();
@@ -37,12 +52,13 @@ public class parcoursDonjon {
             Design.effacerConsole();
 
             ArrayList<Ennemi> ennemis = salle.getEnnemis();
+
             while (!ennemis.isEmpty()) {
-                for (Personnage personnage : personnages) {
+                for (Personnage joueur : personnages) {
                     if (ennemis.isEmpty()) {
                         break;
                     }
-                    if (!personnage.estMort()) {
+                    if (!joueur.estMort()) {
                         Ennemi ennemi = ennemis.get(0);
 
                         boolean actionEffectuee = false;
@@ -50,8 +66,8 @@ public class parcoursDonjon {
                         while (!actionEffectuee) {
 
                             Design.titreAffichage_3(ennemi.getNomEnnemi() + "\nHP : " + ennemi.getHp() + "/" + ennemi.getMaxHp());
-                            Design.titreAffichage_3("C'est au tour de " + personnage.getNomPerso() + " :");
-                            Design.titreAffichage_2(personnage.getNomPerso() + "\nHP : " + personnage.getHp() + "/" + personnage.getMaxHp());
+                            Design.titreAffichage_3("C'est au tour de " + joueur.getNomPerso() + " :");
+                            Design.titreAffichage_2(joueur.getNomPerso() + "\nHP : " + joueur.getHp() + "/" + joueur.getMaxHp());
                             Design.titreAffichage_4("Que voulez-vous faire ?");
                             System.out.println("1. Attaquer");
                             System.out.println("2. Utiliser un objet");
@@ -65,11 +81,11 @@ public class parcoursDonjon {
 
                             if (choice == 1) {
 
-                                int dommage = personnage.getAttaque() - ennemi.getDefense();
+                                int dommage = joueur.getAttaque() - ennemi.getDefense();
                                 if (dommage < 0) {
                                     dommage = 0;
                                 }
-                                Design.titreAffichage_2(personnage.getNomPerso() + " attaque " + ennemi.getNomEnnemi() + " et lui inflige " + dommage + " points de dégâts");
+                                Design.titreAffichage_2(joueur.getNomPerso() + " attaque " + ennemi.getNomEnnemi() + " et lui inflige " + dommage + " points de dégâts");
                                 ennemi.subirDommage(dommage);
 
                                 scanner.nextLine();
@@ -86,9 +102,9 @@ public class parcoursDonjon {
                                 }
                             } else if (choice == 2) {
 
-                                if (personnage.getObjets().isEmpty()) {
+                                if (joueur.getObjets().isEmpty()) {
                                     Design.effacerConsole();
-                                    Design.titreAffichage_2("L'inventaire de " + personnage.getNomPerso() + " est vide !");
+                                    Design.titreAffichage_2("L'inventaire de " + joueur.getNomPerso() + " est vide !");
 
                                     scanner.nextLine();
                                     Design.effacerConsole();
@@ -97,20 +113,20 @@ public class parcoursDonjon {
                                 } else {
                                     Design.titreAffichage_2("Quel objet voulez-vous utiliser ?");
 
-                                    for (int i = 0; i < personnage.getObjets().size(); i++) {
-                                        System.out.println((i + 1) + ". " + personnage.getObjets().get(i).getNomObjet());
+                                    for (int i = 0; i < joueur.getObjets().size(); i++) {
+                                        System.out.println((i + 1) + ". " + joueur.getObjets().get(i).getNomObjet());
                                     }
                                 }
 
                                 int objetChoice = scanner.nextInt();
                                 scanner.nextLine();
                                 Design.effacerConsole();
-                                Objet objet = personnage.getObjets().get(objetChoice - 1);
+                                Objet objet = joueur.getObjets().get(objetChoice - 1);
 
                                 actionEffectuee = true;
 
                                 if (objet instanceof Potion) {
-                                    personnage.utilisePotion((Potion) objet);
+                                    joueur.utilisePotion((Potion) objet);
 
                                     scanner.nextLine();
                                     Design.effacerConsole();
@@ -123,7 +139,7 @@ public class parcoursDonjon {
 
                             } else if (choice == 3) {
 
-                                personnage.afficherInfosPersonnage();
+                                joueur.afficherInfosPersonnage();
 
                                 scanner.nextLine();
                                 Design.effacerConsole();
@@ -174,29 +190,31 @@ public class parcoursDonjon {
         Design.titreAffichage_5("Félicitations, vous avez vaincu le boss final !");
         Design.titreAffichage_2("Vous obtenez " + reward.getNomEquipement() + " !");
 
-        for (Personnage personnage : personnages) {
-            personnage.ajouterEquipement(reward);
-            System.out.println(personnage.getNomPerso() + " :");
-            if (personnage.getArme() == null) {
+        for (Personnage joueur : personnages) {
+            joueur.ajouterEquipement(reward);
+            System.out.println(joueur.getNomPerso() + " :");
+
+            if (joueur.getArme() == null) {
                 Design.titreAffichage_4("Arme : aucune");
             } else {
-                Design.titreAffichage_4("Arme : " + personnage.getArme().getNomArme());
+                Design.titreAffichage_4("Arme : " + joueur.getArme().getNomArme());
             }
-            for (int i = 0; i < personnage.getEquipements().size(); i++) {
-                Equipement equipement = personnage.getEquipements().get(i);
+
+            for (int i = 0; i < joueur.getEquipements().size(); i++) {
+                Equipement equipement = joueur.getEquipements().get(i);
                 if (equipement instanceof Arme) {
-                    Design.titreAffichage_4("Arme " + (i + 1) + " : " + personnage.getEquipements().get(i).getNomEquipement());
+                    Design.titreAffichage_4("Arme " + (i + 1) + " : " + joueur.getEquipements().get(i).getNomEquipement());
                 } else {
-                    Design.titreAffichage_4("Equipement " + (i + 1) + " : " + personnage.getEquipements().get(i).getNomEquipement());
+                    Design.titreAffichage_4("Equipement " + (i + 1) + " : " + joueur.getEquipements().get(i).getNomEquipement());
                 }
             }
 
-            for (int i = 0; i < personnage.getObjets().size(); i++) {
-                Objet objet = personnage.getObjets().get(i);
+            for (int i = 0; i < joueur.getObjets().size(); i++) {
+                Objet objet = joueur.getObjets().get(i);
                 if (objet instanceof Potion) {
-                    Design.titreAffichage_4("Potion " + (i + 1) + " : " + personnage.getObjets().get(i).getNomObjet());
+                    Design.titreAffichage_4("Potion " + (i + 1) + " : " + joueur.getObjets().get(i).getNomObjet());
                 } else {
-                    Design.titreAffichage_4("Objet " + (i + 1) + " : " + personnage.getObjets().get(i).getNomObjet());
+                    Design.titreAffichage_4("Objet " + (i + 1) + " : " + joueur.getObjets().get(i).getNomObjet());
                 }
             }
         }

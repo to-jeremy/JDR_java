@@ -4,6 +4,7 @@ import Classes.Guerrier;
 import Classes.Mage;
 import Classes.Voleur;
 import Design.Design;
+import Jeu.Mecanismes.Carte;
 import Jeu.Mecanismes.parcoursDonjon;
 import Personnages.Personnage;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MenuPrincipal {
-    public static void creerNouveauPersonnage(Scanner scanner, ArrayList<Personnage> personnages) {
+    public static void creerNouveauPersonnage(Scanner scanner, ArrayList<Personnage> personnages, Carte carte) {
         Design.titreAffichage_3("Création d'un nouveau personnage");
 
         String nomPerso = "";
@@ -67,26 +68,40 @@ public class MenuPrincipal {
         Personnage personnage = null;
         switch (choixClasse) {
             case 1:
-                personnage = new Guerrier(nomPerso, 200, 10, 20, 12);
+                personnage = new Guerrier(nomPerso, 200, 10, 20, 12, carte);
                 break;
             case 2:
-                personnage = new Mage(nomPerso, 200, 10, 20, 12);
+                personnage = new Mage(nomPerso, 200, 10, 20, 12, carte);
                 break;
             case 3:
-                personnage = new Voleur(nomPerso, 200, 10, 20, 12);
+                personnage = new Voleur(nomPerso, 200, 10, 20, 12, carte);
                 break;
             default:
                 System.out.println("Classe invalide. Le personnage sera un guerrier par défaut.");
-                personnage = new Guerrier(nomPerso, 200, 10, 20, 12);
+                personnage = new Guerrier(nomPerso, 200, 10, 20, 12, carte);
                 break;
         }
         personnages.add(personnage);
+
+        // Placer l'entrée du donjon à une position à droite du joueur sur la carte
+        int nouvellePosXDonjon = carte.joueurX + 1; // Position en X de l'entrée du donjon
+        int posYDonjon = carte.joueurY; // La position en Y de l'entrée du donjon est la même que celle du joueur
+
+        // Vérifiez d'abord si les nouvelles coordonnées sont valides
+        if (carte.coordValides(nouvellePosXDonjon, posYDonjon)) {
+            // Mettez à jour la carte pour placer l'entrée du donjon à la nouvelle position
+            carte.carte[nouvellePosXDonjon][posYDonjon] = 'D'; // 'D' représente l'entrée du donjon
+        } else {
+            System.out.println("Les coordonnées spécifiées ne sont pas valides.");
+        }
 
         Design.effacerConsole();
         Design.titreAffichage_1("Vous avez choisi la classe " + nomClasse + " pour le personnage " + nomPerso + ".");
 
         scanner.nextLine();
         Design.effacerConsole();
+
+        afficherCarte(carte);
     }
 
     public static void choisirPersonnage(Scanner scanner, ArrayList<Personnage> personnages) {
@@ -181,7 +196,14 @@ public class MenuPrincipal {
         }
     }
 
+    public static void afficherCarte(Carte carte) {
+        Design.titreAffichage_2("Voici la carte du jeu :");
+        carte.afficherCarte();
+    }
+
     public static void menuPrincipal(Scanner scanner, ArrayList<Personnage> personnages) {
+        Carte carte = new Carte(10, 10);
+
         boolean continuer = true;
         while (continuer) {
             Design.titreAffichage_5("Le Royaume chez Darkofu");
@@ -202,7 +224,43 @@ public class MenuPrincipal {
                     Design.effacerConsole();
 
                     // Créer un nouveau personnage
-                    creerNouveauPersonnage(scanner, personnages);
+                    creerNouveauPersonnage(scanner, personnages, carte);
+
+                    /*Design.titreAffichage_2("Voici la carte du jeu :");
+                    Carte carte = new Carte(10, 10); // Crée une carte de taille 10x10
+                    carte.afficherCarte();
+
+                    // Supposons que vous avez déjà créé une instance de la classe Carte appelée "carte"
+                    int nouvellePosX = 3; // Nouvelle position en X
+                    int nouvellePosY = 3; // Nouvelle position en Y
+
+                    // Vérifiez d'abord si les nouvelles coordonnées sont valides
+                    if (carte.coordValides(nouvellePosX, nouvellePosY)) {
+                        // Déplacez le joueur sur la carte
+                        carte.deplacerJoueur(nouvellePosX, nouvellePosY);
+                        System.out.println("Le joueur a été déplacé avec succès à la position : (" + nouvellePosX + ", " + nouvellePosY + ")");
+                    } else {
+                        System.out.println("Les coordonnées spécifiées ne sont pas valides.");
+                    }
+
+                    Design.titreAffichage_2("Voici la carte du jeu actualisée :");
+                    carte.afficherCarte();*/
+
+                    int nouvellePosX = 1; // Nouvelle position en X
+                    int nouvellePosY = 0; // Nouvelle position en Y
+
+                    // Vérifiez d'abord si les nouvelles coordonnées sont valides
+                    if (carte.coordValides(nouvellePosX, nouvellePosY)) {
+                        // Déplacez le joueur sur la carte
+                        carte.deplacerJoueur(nouvellePosX, nouvellePosY);
+                        Design.titreAffichage_1("Le joueur a été déplacé avec succès à la position : (" + nouvellePosX + ", " + nouvellePosY + ")");
+                    } else {
+                        System.out.println("Les coordonnées spécifiées ne sont pas valides.");
+                    }
+
+                    scanner.nextLine();
+                    Design.effacerConsole();
+
                     break;
                 case 2:
                     // Choisir un personnage existant

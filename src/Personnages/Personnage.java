@@ -4,6 +4,7 @@ import Design.Design;
 import Equipements.Arme;
 import Equipements.Equipement;
 import Inventaire.Inventaire;
+import Jeu.Mecanismes.Carte;
 import Objets.Objet;
 import Objets.Potions.Potion;
 import Objets.Potions.PotionType;
@@ -20,8 +21,10 @@ public class Personnage {
     private int mana;
     private Arme arme;
     private Inventaire inventaire;
+    private int vitesse;
+    private Carte carte;
 
-    public Personnage(String nomPerso, int maxHp, int maxMana, int attaque, int defense) {
+    public Personnage(String nomPerso, int maxHp, int maxMana, int attaque, int defense, Carte carte) {
         this.nomPerso = nomPerso;
         this.maxHp = maxHp;
         this.hp = maxHp;
@@ -31,6 +34,7 @@ public class Personnage {
         this.defense = defense;
         this.arme = null;
         this.inventaire = new Inventaire();
+        this.carte = carte;
     }
 
     public String getNomPerso() {
@@ -207,5 +211,17 @@ public class Personnage {
             }
         }
         Design.separateurAffichage(30);
+    }
+
+    public Carte getCarte() {
+        return carte;
+    }
+
+    public int getPositionX() {
+        return carte.getPositionX(this);
+    }
+
+    public int getPositionY() {
+        return carte.getPositionY(this);
     }
 }

@@ -18,6 +18,7 @@ public class Main {
 
             // Créer le donjon
             Donjon donjon = DonjonDesTenebres.creerDonjon();
+            Arme reward = (Arme) donjon.getRecompense();
 
             //Présentation du donjon
             Design.titreAffichage_1("Jeu de rôle || Jérémy TO");
@@ -238,10 +239,10 @@ public class Main {
                 }
             }
             Design.titreAffichage_5("Félicitations, vous avez vaincu le boss final !");
-            //Design.titreAffichage_2("Vous obtenez " + reward.getNomEquipement() + " !");
+            Design.titreAffichage_2("Vous obtenez " + reward.getNomEquipement() + " !");
 
             for (Personnage personnage : personnages) {
-                //personnage.ajouterEquipement(reward);
+                personnage.ajouterEquipement(reward);
                 System.out.println(personnage.getNomPerso() + " :");
                 if (personnage.getArme() == null) {
                     Design.titreAffichage_4("Arme : aucune");

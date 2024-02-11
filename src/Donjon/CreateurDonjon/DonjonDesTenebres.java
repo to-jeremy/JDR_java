@@ -35,7 +35,7 @@ public class DonjonDesTenebres {
         donjonSalles.add(creerSalle("Salle 2", new Object[]{"Bouftou", 90, 27, 13, "Sanglier", 100, 30, 11}));
         donjonSalles.add(creerSalle("Salle 3", new Object[]{"Ours", 110, 32, 9, "Troll", 130, 35, 10}));
         donjonSalles.add(creerSalle("Salle 4", new Object[]{"Dragon", 140, 37, 8}));
-        donjonSalles.add(creerSalle("Salle Boss", new Object[]{"Boss", 180, 40, 7}));
+        donjonSalles.add(creerSalleBoss("Salle Boss", 1, "Boss", 180, 40, 7));
 
 
         Arme reward = new Arme("Epée légendaire", 50, 0);

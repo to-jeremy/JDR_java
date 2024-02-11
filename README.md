@@ -45,11 +45,6 @@
 
 - Mécanisme de monnaie virtuel (Or et Diamants (**potentiellement**))
 
-- Menu principal
-  - Choisir un personnage existant
-  - Créer un nouveau personnage
-  - Supprimer un personnage existant
-
 - Magasin pour acheter des équipements, potions, etc
 
 - Faire une map sur le jeu (mécanisme complexe)
@@ -83,3 +78,8 @@
     - Sorcier
 
 - Mécanisme du donjon amélioré
+
+- Menu principal
+  - Choisir un personnage existant
+  - Créer un nouveau personnage
+  - Supprimer un personnage existant

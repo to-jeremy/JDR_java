@@ -140,33 +140,56 @@ public class Main {
     }
 
     public static void supprimerPersonnage(Scanner scanner, ArrayList<Personnage> personnages) {
-        Design.titreAffichage_1("Supprimer un personnage existant");
+        while (true) {
+            Design.titreAffichage_1("Supprimer un personnage existant");
 
-        if (personnages.isEmpty()) {
-            System.out.println("Aucun personnage disponible.");
-            return;
-        }
+            if (personnages.isEmpty()) {
+                Design.titreAffichage_6("Aucun personnage disponible.");
 
-        System.out.println("Liste des personnages :");
-        for (int i = 0; i < personnages.size(); i++) {
-            System.out.println((i + 1) + ". " + personnages.get(i).getNomPerso());
-        }
+                scanner.nextLine();
+                Design.effacerConsole();
 
-        System.out.print("Choisissez un personnage à supprimer : ");
-        int choix = scanner.nextInt();
-        scanner.nextLine(); // Pour consommer la fin de ligne après nextInt()
+                return;
+            }
 
-        if (choix >= 1 && choix <= personnages.size()) {
-            Personnage personnageSupprime = personnages.remove(choix - 1);
-            System.out.println(personnageSupprime.getNomPerso() + " a été supprimé avec succès !");
-        } else {
-            System.out.println("Choix invalide.");
+            Design.titreAffichage_4("Liste des personnages :");
+            for (int i = 0; i < personnages.size(); i++) {
+                System.out.println((i + 1) + ". " + personnages.get(i).getNomPerso());
+            }
+
+            Design.titreAffichage_2("Choisissez un personnage à supprimer (ou tapez 0 pour revenir au menu principal) : ");
+            int choix = scanner.nextInt();
+            scanner.nextLine();
+
+            if (choix == 0) {
+                Design.effacerConsole();
+
+                return;
+            }
+
+            if (choix >= 1 && choix <= personnages.size()) {
+                Personnage personnageSupprime = personnages.remove(choix - 1);
+
+                Design.effacerConsole();
+                Design.titreAffichage_2(personnageSupprime.getNomPerso() + " a été supprimé avec succès !");
+                scanner.nextLine();
+                Design.effacerConsole();
+
+                return;
+            } else {
+                Design.effacerConsole();
+                Design.titreAffichage_2("Choix invalide. Veuillez choisir un numéro valide.");
+                scanner.nextLine();
+                Design.effacerConsole();
+            }
         }
     }
 
     public static void menuPrincipal(Scanner scanner, ArrayList<Personnage> personnages) {
         boolean continuer = true;
         while (continuer) {
+            Design.titreAffichage_5("Le Royaume chez Darkofu");
+
             Design.titreAffichage_1("Menu Principal");
             System.out.println("1. Créer un nouveau personnage");
             System.out.println("2. Choisir un personnage existant");
@@ -201,7 +224,7 @@ public class Main {
                     Design.effacerConsole();
 
                     // Quitter le menu principal
-                    Design.titreAffichage_2("Merci d'avoir joué au jeu de rôle du donjon !");
+                    Design.titreAffichage_2("Merci d'avoir joué au Royaume chez Darkofu !");
 
                     System.exit(0);
                 default:

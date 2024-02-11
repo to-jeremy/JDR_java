@@ -1,6 +1,7 @@
 import Classes.*;
 import Design.*;
 import Donjon.*;
+import Donjon.CreateurDonjon.DonjonDesTenebres;
 import Ennemis.*;
 import Equipements.*;
 import Objets.*;
@@ -16,34 +17,7 @@ public class Main {
         try (Scanner scanner = new Scanner(System.in)) {
 
             // Créer le donjon
-            ArrayList<Salle> salles = new ArrayList<>();
-            Salle salle1 = new Salle("Salle 1", new ArrayList<Ennemi>() {{
-                add(new Ennemi("Gobelin", 70, 23, 15));
-                add(new Ennemi("Tofu", 80, 25, 14));
-            }});
-            Salle salle2 = new Salle("Salle 2", new ArrayList<Ennemi>() {{
-                add(new Ennemi("Bouftou", 90, 27, 13));
-                add(new Ennemi("Sanglier", 100, 30, 11));
-            }});
-            Salle salle3 = new Salle("Salle 3", new ArrayList<Ennemi>() {{
-                add(new Ennemi("Ours", 110, 32, 9));
-                add(new Ennemi("Troll", 130, 35, 10));
-            }});
-            Salle salle4 = new Salle("Salle 4", new ArrayList<Ennemi>() {{
-                add(new Ennemi("Dragon", 140, 37, 8));
-            }});
-            Salle salle5 = new Salle("Salle Boss", new ArrayList<Ennemi>() {{
-                add(new Boss("Boss", 180, 40, 7));
-            }});
-            ArrayList<Salle> donjonSalles = new ArrayList<Salle>() {{
-                add(salle1);
-                add(salle2);
-                add(salle3);
-                add(salle4);
-                add(salle5);
-            }};
-            Arme reward = new Arme("Epée légendaire", 50, 0);
-            Donjon donjon = new Donjon("Donjon", donjonSalles, reward);
+            Donjon donjon = DonjonDesTenebres.creerDonjon();
 
             //Présentation du donjon
             Design.titreAffichage_1("Jeu de rôle || Jérémy TO");
@@ -115,7 +89,7 @@ public class Main {
             }
 
             //Equipements des personnages
-            Arme epee = new Arme("Épée", 15, 0);
+            Arme epee = new Arme("Épée basique", 15, 0);
             Potion potionMagique = new Potion("Soin", 0, 15, PotionType.SOIN);
 
             personnages.get(0).equipArme(epee);
@@ -264,10 +238,10 @@ public class Main {
                 }
             }
             Design.titreAffichage_5("Félicitations, vous avez vaincu le boss final !");
-            Design.titreAffichage_2("Vous obtenez " + reward.getNomEquipement() + " !");
+            //Design.titreAffichage_2("Vous obtenez " + reward.getNomEquipement() + " !");
 
             for (Personnage personnage : personnages) {
-                personnage.ajouterEquipement(reward);
+                //personnage.ajouterEquipement(reward);
                 System.out.println(personnage.getNomPerso() + " :");
                 if (personnage.getArme() == null) {
                     Design.titreAffichage_4("Arme : aucune");

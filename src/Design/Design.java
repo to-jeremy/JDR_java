@@ -38,4 +38,9 @@ public class Design {
         separateurAffichage(40);
         System.out.println(titre);
     }
+
+    public static void titreAffichage_6(String titre){
+        System.out.println(titre);
+        separateurAffichage(40);
+    }
 }

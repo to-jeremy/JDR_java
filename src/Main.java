@@ -44,20 +44,23 @@ public class Main {
 
             System.out.print("Choix : ");
             String input = scanner.nextLine().trim();
+            Design.effacerConsole();
 
             if (!input.isEmpty()) {
                 // Si l'entrée n'est pas vide, on essaie de la convertir en entier
                 try {
                     choixClasse = Integer.parseInt(input);
                     if (choixClasse < 1 || choixClasse > classes.length) {
-                        System.out.println("Choix invalide. Veuillez choisir un numéro entre 1 et " + classes.length + ".");
+                        Design.titreAffichage_1("Choix invalide. Veuillez choisir un numéro entre 1 et " + classes.length + ".");
+                        scanner.nextLine();
+                        Design.effacerConsole();
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Veuillez entrer un numéro valide.");
                 }
             } else {
                 Design.effacerConsole();
-                Design.titreAffichage_2("Vous devez entrer un numéro de classe.");
+                Design.titreAffichage_1("Vous devez entrer un numéro de classe.");
                 scanner.nextLine();
             }
         }
@@ -90,28 +93,49 @@ public class Main {
     }
 
     public static void choisirPersonnage(Scanner scanner, ArrayList<Personnage> personnages) {
-        Design.titreAffichage_1("Choisir un personnage existant");
+        while (true) {
+            Design.titreAffichage_1("Choisir un personnage existant");
 
-        if (personnages.isEmpty()) {
-            System.out.println("Aucun personnage disponible.");
-            return;
-        }
+            if (personnages.isEmpty()) {
+                Design.titreAffichage_6("Aucun personnage disponible.");
 
-        System.out.println("Liste des personnages :");
-        for (int i = 0; i < personnages.size(); i++) {
-            System.out.println((i + 1) + ". " + personnages.get(i).getNomPerso());
-        }
+                scanner.nextLine();
+                Design.effacerConsole();
 
-        System.out.print("Choisissez un personnage : ");
-        int choix = scanner.nextInt();
-        scanner.nextLine(); // Pour consommer la fin de ligne après nextInt()
+                return;
+            }
 
-        if (choix >= 1 && choix <= personnages.size()) {
-            Personnage personnageChoisi = personnages.get(choix - 1);
-            System.out.println("Vous avez choisi " + personnageChoisi.getNomPerso() + " !");
-            // Maintenant vous pouvez faire quelque chose avec ce personnage, comme jouer avec lui.
-        } else {
-            System.out.println("Choix invalide.");
+            Design.titreAffichage_4("Liste des personnages :");
+            for (int i = 0; i < personnages.size(); i++) {
+                System.out.println((i + 1) + ". " + personnages.get(i).getNomPerso());
+            }
+
+            Design.titreAffichage_2("Choisissez un personnage (ou tapez 0 pour revenir au menu principal) : ");
+            int choix = scanner.nextInt();
+            scanner.nextLine(); // Pour consommer la fin de ligne après nextInt()
+
+            if (choix == 0) {
+                Design.effacerConsole();
+
+                return; // Revenir au menu principal
+            }
+
+            if (choix >= 1 && choix <= personnages.size()) {
+                Personnage personnageChoisi = personnages.get(choix - 1);
+
+                Design.effacerConsole();
+                Design.titreAffichage_2("Vous avez choisi le personnage " + personnageChoisi.getNomPerso() + " !");
+                scanner.nextLine();
+                Design.effacerConsole();
+
+                // Maintenant vous pouvez faire quelque chose avec ce personnage, comme jouer avec lui.
+                return;
+            } else {
+                Design.effacerConsole();
+                Design.titreAffichage_2("Choix invalide.");
+                scanner.nextLine();
+                Design.effacerConsole();
+            }
         }
     }
 
@@ -156,9 +180,9 @@ public class Main {
 
             switch (choix) {
                 case 1:
-                    // Créer un nouveau personnage
                     Design.effacerConsole();
 
+                    // Créer un nouveau personnage
                     creerNouveauPersonnage(scanner, personnages);
                     break;
                 case 2:
@@ -174,6 +198,8 @@ public class Main {
                     supprimerPersonnage(scanner, personnages);
                     break;
                 case 4:
+                    Design.effacerConsole();
+
                     // Quitter le menu principal
                     Design.titreAffichage_2("Merci d'avoir joué au jeu de rôle du donjon !");
 

@@ -13,23 +13,197 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+
+    public static void creerNouveauPersonnage(Scanner scanner, ArrayList<Personnage> personnages) {
+        Design.titreAffichage_3("Création d'un nouveau personnage");
+
+        String nomPerso = "";
+        while (nomPerso.trim().isEmpty()) {
+            Design.titreAffichage_2("Nom du personnage : ");
+            nomPerso = scanner.nextLine().trim(); // Trim pour supprimer les espaces avant et après
+
+            if (nomPerso.isEmpty()) {
+                Design.effacerConsole();
+                Design.titreAffichage_2("Le nom ne peut pas être vide !");
+                scanner.nextLine(); // Pour attendre que l'utilisateur appuie sur entrée
+                Design.effacerConsole();
+            }
+        }
+
+        String[] classes = {"Guerrier", "Mage", "Voleur"};
+
+        int choixClasse = 0;
+        while (choixClasse < 1 || choixClasse > classes.length) {
+            Design.effacerConsole();
+            Design.titreAffichage_2("Choisissez une classe pour votre personnage :");
+
+            for (int i = 0; i < classes.length; i++) {
+                System.out.println((i + 1) + ". " + classes[i]);
+            }
+            Design.separateurAffichage(30);
+
+            System.out.print("Choix : ");
+            String input = scanner.nextLine().trim();
+
+            if (!input.isEmpty()) {
+                // Si l'entrée n'est pas vide, on essaie de la convertir en entier
+                try {
+                    choixClasse = Integer.parseInt(input);
+                    if (choixClasse < 1 || choixClasse > classes.length) {
+                        System.out.println("Choix invalide. Veuillez choisir un numéro entre 1 et " + classes.length + ".");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Veuillez entrer un numéro valide.");
+                }
+            } else {
+                Design.effacerConsole();
+                Design.titreAffichage_2("Vous devez entrer un numéro de classe.");
+                scanner.nextLine();
+            }
+        }
+
+        String nomClasse = classes[choixClasse - 1];
+
+        Personnage personnage = null;
+        switch (choixClasse) {
+            case 1:
+                personnage = new Guerrier(nomPerso, 200, 10, 20, 12);
+                break;
+            case 2:
+                personnage = new Mage(nomPerso, 200, 10, 20, 12);
+                break;
+            case 3:
+                personnage = new Voleur(nomPerso, 200, 10, 20, 12);
+                break;
+            default:
+                System.out.println("Classe invalide. Le personnage sera un guerrier par défaut.");
+                personnage = new Guerrier(nomPerso, 200, 10, 20, 12);
+                break;
+        }
+        personnages.add(personnage);
+
+        Design.effacerConsole();
+        Design.titreAffichage_1("Vous avez choisi la classe " + nomClasse + " pour le personnage " + nomPerso + ".");
+
+        scanner.nextLine();
+        Design.effacerConsole();
+    }
+
+    public static void choisirPersonnage(Scanner scanner, ArrayList<Personnage> personnages) {
+        Design.titreAffichage_1("Choisir un personnage existant");
+
+        if (personnages.isEmpty()) {
+            System.out.println("Aucun personnage disponible.");
+            return;
+        }
+
+        System.out.println("Liste des personnages :");
+        for (int i = 0; i < personnages.size(); i++) {
+            System.out.println((i + 1) + ". " + personnages.get(i).getNomPerso());
+        }
+
+        System.out.print("Choisissez un personnage : ");
+        int choix = scanner.nextInt();
+        scanner.nextLine(); // Pour consommer la fin de ligne après nextInt()
+
+        if (choix >= 1 && choix <= personnages.size()) {
+            Personnage personnageChoisi = personnages.get(choix - 1);
+            System.out.println("Vous avez choisi " + personnageChoisi.getNomPerso() + " !");
+            // Maintenant vous pouvez faire quelque chose avec ce personnage, comme jouer avec lui.
+        } else {
+            System.out.println("Choix invalide.");
+        }
+    }
+
+    public static void supprimerPersonnage(Scanner scanner, ArrayList<Personnage> personnages) {
+        Design.titreAffichage_1("Supprimer un personnage existant");
+
+        if (personnages.isEmpty()) {
+            System.out.println("Aucun personnage disponible.");
+            return;
+        }
+
+        System.out.println("Liste des personnages :");
+        for (int i = 0; i < personnages.size(); i++) {
+            System.out.println((i + 1) + ". " + personnages.get(i).getNomPerso());
+        }
+
+        System.out.print("Choisissez un personnage à supprimer : ");
+        int choix = scanner.nextInt();
+        scanner.nextLine(); // Pour consommer la fin de ligne après nextInt()
+
+        if (choix >= 1 && choix <= personnages.size()) {
+            Personnage personnageSupprime = personnages.remove(choix - 1);
+            System.out.println(personnageSupprime.getNomPerso() + " a été supprimé avec succès !");
+        } else {
+            System.out.println("Choix invalide.");
+        }
+    }
+
+    public static void menuPrincipal(Scanner scanner, ArrayList<Personnage> personnages) {
+        boolean continuer = true;
+        while (continuer) {
+            Design.titreAffichage_1("Menu Principal");
+            System.out.println("1. Créer un nouveau personnage");
+            System.out.println("2. Choisir un personnage existant");
+            System.out.println("3. Supprimer un personnage existant");
+            System.out.println("4. Quitter");
+
+            Design.separateurAffichage(40);
+
+            int choix = scanner.nextInt();
+            scanner.nextLine(); // Pour consommer la fin de ligne après nextInt()
+
+            switch (choix) {
+                case 1:
+                    // Créer un nouveau personnage
+                    Design.effacerConsole();
+
+                    creerNouveauPersonnage(scanner, personnages);
+                    break;
+                case 2:
+                    // Choisir un personnage existant
+                    Design.effacerConsole();
+
+                    choisirPersonnage(scanner, personnages);
+                    break;
+                case 3:
+                    // Supprimer un personnage existant
+                    Design.effacerConsole();
+
+                    supprimerPersonnage(scanner, personnages);
+                    break;
+                case 4:
+                    // Quitter le menu principal
+                    Design.titreAffichage_2("Merci d'avoir joué au jeu de rôle du donjon !");
+
+                    System.exit(0);
+                default:
+                    System.out.println("Choix invalide. Veuillez choisir une option valide.");
+                    break;
+            }
+        }
+    }
+
+
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
 
-            // Créer le donjon
-            Donjon donjon = DonjonDesTenebres.creerDonjon();
-            Arme reward = (Arme) donjon.getRecompense();
-
-            //Présentation du donjon
+            //Présentation du jeu
             Design.titreAffichage_1("Jeu de rôle || Jérémy TO");
 
             System.out.println("\nCliquer sur entrée pour continuer...");
             scanner.nextLine();
             Design.effacerConsole();
 
+            // Créer le donjon
+            Donjon donjon = DonjonDesTenebres.creerDonjon();
+            Arme reward = (Arme) donjon.getRecompense();
+
             // Créer l'équipe de personnages
             ArrayList<Personnage> personnages = new ArrayList<>();
-            Design.titreAffichage_5("Création de l'équipe de personnages !");
+            menuPrincipal(scanner, personnages);
+            /*Design.titreAffichage_5("Création de l'équipe de personnages !");
 
             for (int i = 1; i <= 3; i++) {
                 Design.titreAffichage_2("Création du personnage " + i + " :");
@@ -87,7 +261,7 @@ public class Main {
                         break;
                 }
                 personnages.add(personnage);
-            }
+            }*/
 
             //Equipements des personnages
             Arme epee = new Arme("Épée basique", 15, 0);

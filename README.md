@@ -1,19 +1,14 @@
 # Jeu de rôle en Java
 
-## Première version du jeu de rôle (version du 10/03/2023) :
+> ## Première version du jeu de rôle (version du 10/03/2023) :
     
 > ### Personnages
 
 - Classes des personnages
-  - Version du 10/03/2023
+  - **Version du 10/03/2023**
     - Guerrier
     - Mage
     - Voleur
-  - Version du 11/02/2023
-    - Archer
-    - Assassin
-    - Barbare
-    - Sorcier
 
 - Inventaire des personnages
 
@@ -25,7 +20,7 @@
 - Salles du donjon
 - Ennemis du donjon
 
-> ### Mécanisme du jeu
+> ### Objets du jeu
 
 - Objets du jeu
   - Potions
@@ -77,3 +72,14 @@
 - Échanges entre différents joueurs
   - Monnaie virtuelle (Or)
   - Équipements
+
+> ## Amélioration du jeu de rôle (version du 11/02/2024) :
+
+- Ajout de classes des personnages
+  - **Version du 11/02/2023**
+    - Archer
+    - Assassin
+    - Barbare
+    - Sorcier
+
+- Mécanisme du donjon amélioré

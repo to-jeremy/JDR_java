@@ -1,7 +1,7 @@
 import Classes.*;
 import Design.*;
 import Donjon.*;
-import Donjon.CreateurDonjon.DonjonDesTenebres;
+import Donjon.CreationDonjon.DonjonDesTenebres;
 import Ennemis.*;
 import Equipements.*;
 import Objets.*;

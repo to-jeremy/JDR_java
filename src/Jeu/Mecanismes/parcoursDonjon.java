@@ -29,6 +29,12 @@ public class parcoursDonjon {
         } else {
             // Si le joueur n'est pas à l'entrée du donjon, affichez un message
             Design.titreAffichage_1("Vous devez vous déplacer vers l'entrée du donjon pour y accéder.");
+
+            scanner.nextLine();
+            Design.effacerConsole();
+
+            // Demandez les nouvelles coordonnées en utilisant la classe parcoursCarte
+            parcoursCarte.demanderNouvellesCoordonnees(scanner, carte, personnage);
             return;
         }
 

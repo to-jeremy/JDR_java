@@ -5,6 +5,7 @@ import Classes.Mage;
 import Classes.Voleur;
 import Design.Design;
 import Jeu.Mecanismes.Carte;
+import Jeu.Mecanismes.parcoursCarte;
 import Jeu.Mecanismes.parcoursDonjon;
 import Personnages.Personnage;
 
@@ -226,40 +227,27 @@ public class MenuPrincipal {
                     // Créer un nouveau personnage
                     creerNouveauPersonnage(scanner, personnages, carte);
 
-                    /*Design.titreAffichage_2("Voici la carte du jeu :");
-                    Carte carte = new Carte(10, 10); // Crée une carte de taille 10x10
-                    carte.afficherCarte();
-
-                    // Supposons que vous avez déjà créé une instance de la classe Carte appelée "carte"
-                    int nouvellePosX = 3; // Nouvelle position en X
-                    int nouvellePosY = 3; // Nouvelle position en Y
-
-                    // Vérifiez d'abord si les nouvelles coordonnées sont valides
-                    if (carte.coordValides(nouvellePosX, nouvellePosY)) {
-                        // Déplacez le joueur sur la carte
-                        carte.deplacerJoueur(nouvellePosX, nouvellePosY);
-                        System.out.println("Le joueur a été déplacé avec succès à la position : (" + nouvellePosX + ", " + nouvellePosY + ")");
-                    } else {
-                        System.out.println("Les coordonnées spécifiées ne sont pas valides.");
-                    }
-
-                    Design.titreAffichage_2("Voici la carte du jeu actualisée :");
-                    carte.afficherCarte();*/
-
-                    int nouvellePosX = 1; // Nouvelle position en X
-                    int nouvellePosY = 0; // Nouvelle position en Y
+                    // Demandez aux joueurs d'entrer les coordonnées vers lesquelles ils veulent se déplacer
+                    Design.titreAffichage_1("Entrez les coordonnées de la nouvelle position : ");
+                    Design.titreAffichage_4("Position en X : ");
+                    int nouvellePosX = scanner.nextInt();
+                    Design.titreAffichage_2("Position en Y : ");
+                    int nouvellePosY = scanner.nextInt();
 
                     // Vérifiez d'abord si les nouvelles coordonnées sont valides
                     if (carte.coordValides(nouvellePosX, nouvellePosY)) {
                         // Déplacez le joueur sur la carte
                         carte.deplacerJoueur(nouvellePosX, nouvellePosY);
-                        Design.titreAffichage_1("Le joueur a été déplacé avec succès à la position : (" + nouvellePosX + ", " + nouvellePosY + ")");
+                        Design.titreAffichage_6("Le joueur a été déplacé avec succès à la position : (" + nouvellePosX + ", " + nouvellePosY + ")");
                     } else {
-                        System.out.println("Les coordonnées spécifiées ne sont pas valides.");
+                        Design.titreAffichage_6("Les coordonnées spécifiées ne sont pas valides.");
                     }
 
                     scanner.nextLine();
+                    scanner.nextLine();
                     Design.effacerConsole();
+
+                    //parcoursCarte.demanderNouvellesCoordonnees(scanner,carte, personnage);
 
                     break;
                 case 2:

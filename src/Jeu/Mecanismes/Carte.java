@@ -16,7 +16,6 @@ public class Carte {
         carte = new char[largeur][hauteur];
 
         // Initialise la carte avec des zones par défaut
-        // Exemple simplifié :
         for (int i = 0; i < largeur; i++) {
             for (int j = 0; j < hauteur; j++) {
                 carte[i][j] = 'P'; // Plaine par défaut

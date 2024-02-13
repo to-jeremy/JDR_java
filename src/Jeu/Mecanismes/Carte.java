@@ -40,11 +40,11 @@ public class Carte {
         }
     }
 
-    public void deplacerJoueur(int deltaX, int deltaY) {
-        int nouveauX = joueurX + deltaX;
-        int nouveauY = joueurY + deltaY;
+    public void deplacerJoueur(int deplacementX, int deplacementY) {
+        int nouveauX = joueurX + deplacementX;
+        int nouveauY = joueurY + deplacementY;
         // Vérifie si le déplacement est valide
-        if (nouveauX >= 0 && nouveauX < carte.length && nouveauY >= 0 && nouveauY < carte[0].length) {
+        if (coordValides(nouveauX, nouveauY)) {
             joueurX = nouveauX;
             joueurY = nouveauY;
         }

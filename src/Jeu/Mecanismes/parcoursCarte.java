@@ -11,33 +11,39 @@ public class parcoursCarte {
         carte.afficherCarte();
     }
 
-    public static void demanderNouvellesCoordonnees(Scanner scanner, Carte carte, Personnage personnage) {
+    public static void demanderCoordonnees(Scanner scanner, Carte carte, Personnage personnage) {
         do {
             afficherCarte(carte);
 
             Design.titreAffichage_1("Entrez les coordonnées de la nouvelle position : ");
             Design.titreAffichage_4("Position en X : ");
+
+            while (!scanner.hasNextInt()) {
+                System.out.println("Veuillez entrer un numéro valide pour la position en X.");
+                scanner.next();
+            }
             int nouvellePosX = scanner.nextInt();
+
             Design.titreAffichage_2("Position en Y : ");
+
+            while (!scanner.hasNextInt()) {
+                System.out.println("Veuillez entrer un numéro valide pour la position en Y.");
+                scanner.next();
+            }
             int nouvellePosY = scanner.nextInt();
 
-            // Vérifiez d'abord si les nouvelles coordonnées sont valides
-            if (carte.coordValides(nouvellePosX, nouvellePosY)) {
-                // Déplacez le joueur sur la carte
-                carte.deplacerJoueur(nouvellePosX, nouvellePosY);
-                Design.titreAffichage_6("Le joueur a été déplacé avec succès à la position : (" + nouvellePosX + ", " + nouvellePosY + ")");
+            // Déplacez le joueur sur la carte
+            carte.deplacerJoueur(nouvellePosX, nouvellePosY);
 
+            Design.titreAffichage_6("Le joueur a été déplacé avec succès à la position : (" + nouvellePosX + ", " + nouvellePosY + ")");
+            scanner.nextLine();
+
+            // Vérifiez si le joueur est à l'entrée du donjon
+            if (carte.getCase(personnage.getPositionX(), personnage.getPositionY()) == 'D') {
+                // Si oui, sortez de la boucle
                 scanner.nextLine();
-
-                // Vérifiez si le joueur est à l'entrée du donjon
-                if (carte.getCase(personnage.getPositionX(), personnage.getPositionY()) == 'D') {
-                    // Si oui, sortez de la boucle
-                    break;
-                }
-            } else {
-                Design.titreAffichage_6("Les coordonnées spécifiées ne sont pas valides.");
-
-                scanner.nextLine();
+                Design.effacerConsole();
+                break;
             }
 
             // Nettoyer le scanner pour éviter les problèmes de saisie
@@ -49,6 +55,11 @@ public class parcoursCarte {
             String choix = scanner.nextLine().trim().toLowerCase();
             Design.effacerConsole();
 
+            // Si l'utilisateur appuie simplement sur Entrée, considérez-le comme "oui"
+            if (choix.isEmpty()) {
+                choix = "oui";
+            }
+
             // Si l'utilisateur répond "Non", sortir de la boucle
             if (!choix.equals("oui")) {
                 break;
@@ -56,5 +67,4 @@ public class parcoursCarte {
 
         } while (true);
     }
-
 }

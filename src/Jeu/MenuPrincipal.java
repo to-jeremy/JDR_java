@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MenuPrincipal {
-    public static void creerNouveauPersonnage(Scanner scanner, ArrayList<Personnage> personnages, Carte carte) {
+    public static Personnage creerNouveauPersonnage(Scanner scanner, ArrayList<Personnage> personnages, Carte carte) {
         Design.titreAffichage_3("Création d'un nouveau personnage");
 
         String nomPerso = "";
@@ -103,6 +103,8 @@ public class MenuPrincipal {
         Design.effacerConsole();
 
         afficherCarte(carte);
+
+        return personnage;
     }
 
     public static void choisirPersonnage(Scanner scanner, ArrayList<Personnage> personnages) {
@@ -225,29 +227,10 @@ public class MenuPrincipal {
                     Design.effacerConsole();
 
                     // Créer un nouveau personnage
-                    creerNouveauPersonnage(scanner, personnages, carte);
+                    Personnage personnage = creerNouveauPersonnage(scanner, personnages, carte);
 
                     // Demandez aux joueurs d'entrer les coordonnées vers lesquelles ils veulent se déplacer
-                    Design.titreAffichage_1("Entrez les coordonnées de la nouvelle position : ");
-                    Design.titreAffichage_4("Position en X : ");
-                    int nouvellePosX = scanner.nextInt();
-                    Design.titreAffichage_2("Position en Y : ");
-                    int nouvellePosY = scanner.nextInt();
-
-                    // Vérifiez d'abord si les nouvelles coordonnées sont valides
-                    if (carte.coordValides(nouvellePosX, nouvellePosY)) {
-                        // Déplacez le joueur sur la carte
-                        carte.deplacerJoueur(nouvellePosX, nouvellePosY);
-                        Design.titreAffichage_6("Le joueur a été déplacé avec succès à la position : (" + nouvellePosX + ", " + nouvellePosY + ")");
-                    } else {
-                        Design.titreAffichage_6("Les coordonnées spécifiées ne sont pas valides.");
-                    }
-
-                    scanner.nextLine();
-                    scanner.nextLine();
-                    Design.effacerConsole();
-
-                    //parcoursCarte.demanderNouvellesCoordonnees(scanner,carte, personnage);
+                    parcoursCarte.demanderCoordonnees(scanner,carte, personnage);
 
                     break;
                 case 2:

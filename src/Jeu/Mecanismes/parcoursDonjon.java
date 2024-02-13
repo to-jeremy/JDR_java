@@ -34,7 +34,7 @@ public class parcoursDonjon {
             Design.effacerConsole();
 
             // Demandez les nouvelles coordonnées en utilisant la classe parcoursCarte
-            parcoursCarte.demanderNouvellesCoordonnees(scanner, carte, personnage);
+            parcoursCarte.demanderCoordonnees(scanner, carte, personnage);
             return;
         }
 

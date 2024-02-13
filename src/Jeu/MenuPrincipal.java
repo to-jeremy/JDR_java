@@ -209,7 +209,7 @@ public class MenuPrincipal {
 
         boolean continuer = true;
         while (continuer) {
-            Design.titreAffichage_5("Le Royaume chez Darkofu");
+            Design.titreAffichage_5("Le Village Obscur de Darkofu");
 
             Design.titreAffichage_1("Menu Principal");
             System.out.println("1. Créer un nouveau personnage");
@@ -249,7 +249,8 @@ public class MenuPrincipal {
                     Design.effacerConsole();
 
                     // Quitter le menu principal
-                    Design.titreAffichage_2("Merci d'avoir joué au Royaume chez Darkofu !");
+                    Design.titreAffichage_2("Merci d'avoir joué au jeu !");
+                    Design.titreAffichage_4("© 2024 | Le Village Obscur de Darkofu");
 
                     System.exit(0);
                 default:

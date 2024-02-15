@@ -3,6 +3,8 @@ package Jeu.Mecanismes;
 import java.util.Scanner;
 
 import Design.Design;
+import Donjon.CreationDonjon.DonjonDesTenebres;
+import Donjon.CreationDonjon.DonjonDesTrolls;
 import Personnages.Personnage;
 
 public class parcoursCarte {
@@ -38,13 +40,15 @@ public class parcoursCarte {
             Design.titreAffichage_6("Le joueur a été déplacé avec succès à la position : (" + nouvellePosX + ", " + nouvellePosY + ")");
             scanner.nextLine();
 
-            // Vérifiez si le joueur est à l'entrée du donjon
-            if (carte.getCase(personnage.getPositionX(), personnage.getPositionY()) == 'D') {
+            // Vérifiez si le joueur est à l'entrée d'un donjon
+            if (carte.estEntreeDonjon(personnage.getPositionX(), personnage.getPositionY(), DonjonDesTenebres.getEntreeX(), DonjonDesTenebres.getEntreeY()) ||
+                    carte.estEntreeDonjon(personnage.getPositionX(), personnage.getPositionY(), DonjonDesTrolls.getEntreeX(), DonjonDesTrolls.getEntreeY())) {
                 // Si oui, sortez de la boucle
                 scanner.nextLine();
                 Design.effacerConsole();
                 break;
             }
+
 
             // Nettoyer le scanner pour éviter les problèmes de saisie
             scanner.nextLine();

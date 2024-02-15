@@ -2,6 +2,7 @@ package Jeu.Mecanismes;
 
 import Design.Design;
 import Donjon.CreationDonjon.DonjonDesTenebres;
+import Donjon.CreationDonjon.DonjonDesTrolls;
 import Donjon.Donjon;
 import Ennemis.Ennemi;
 import Equipements.Arme;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class parcoursDonjon {
+
     public static void parcourirDonjon(Scanner scanner, ArrayList<Personnage> personnages) {
         // Obtenez le personnage actif
         Personnage personnage = personnages.get(personnages.size() - 1);
@@ -23,23 +25,34 @@ public class parcoursDonjon {
         // Obtenez la carte du personnage
         Carte carte = personnage.getCarte();
 
-        // Vérifiez si le joueur est à l'entrée du donjon
-        if (carte.getCase(personnage.getPositionX(), personnage.getPositionY()) == 'D') {
-            Design.titreAffichage_5("Voici le donjon du jeu !");
+        // Vérifiez si le joueur est à l'entrée d'un des donjons
+        int entreeXTenebres = DonjonDesTenebres.getEntreeX();
+        int entreeYTenebres = DonjonDesTenebres.getEntreeY();
+
+        int entreeXTrolls = DonjonDesTrolls.getEntreeX();
+        int entreeYTrolls = DonjonDesTrolls.getEntreeY();
+
+        int joueurX = personnage.getPositionX();
+        int joueurY = personnage.getPositionY();
+
+        if (joueurX == entreeXTenebres && joueurY == entreeYTenebres) {
+            parcourirDonjon(scanner, personnages, DonjonDesTenebres.creerDonjon());
+        } else if (joueurX == entreeXTrolls && joueurY == entreeYTrolls) {
+            parcourirDonjon(scanner, personnages, DonjonDesTrolls.creerDonjon());
         } else {
-            // Si le joueur n'est pas à l'entrée du donjon, affichez un message
-            Design.titreAffichage_1("Vous devez vous déplacer vers l'entrée du donjon pour y accéder.");
+            // Si le joueur n'est à l'entrée d'aucun des donjons, affichez un message
+            Design.titreAffichage_1("Vous devez vous déplacer vers l'entrée d'un donjon pour y accéder.");
 
             scanner.nextLine();
             Design.effacerConsole();
 
             // Demandez les nouvelles coordonnées en utilisant la classe parcoursCarte
             parcoursCarte.demanderCoordonnees(scanner, carte, personnage);
-            return;
         }
+    }
 
+    public static void parcourirDonjon(Scanner scanner, ArrayList<Personnage> personnages, Donjon donjon) {
         // Créer le donjon
-        Donjon donjon = DonjonDesTenebres.creerDonjon();
         Arme reward = (Arme) donjon.getRecompense();
 
         // Parcourir le donjon

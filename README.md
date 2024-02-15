@@ -85,3 +85,6 @@
   - Supprimer un personnage existant
 
 - **Création d'une petite map sur le jeu (en cours de développement)**
+  - Ajout de marquage sur la map pour les donjons
+
+- Ajout d'un deuxième donjon (en phase de test)

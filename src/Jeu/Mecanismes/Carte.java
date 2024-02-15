@@ -65,4 +65,9 @@ public class Carte {
     public int getPositionY(Personnage personnage) {
         return joueurY;
     }
+
+    public boolean estEntreeDonjon(int x, int y, int entreeX, int entreeY) {
+        // Comparez les coordonnées spécifiées avec celles de l'entrée du donjon
+        return x == entreeX && y == entreeY;
+    }
 }

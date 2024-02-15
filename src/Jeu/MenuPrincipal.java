@@ -4,6 +4,8 @@ import Classes.Guerrier;
 import Classes.Mage;
 import Classes.Voleur;
 import Design.Design;
+import Donjon.CreationDonjon.DonjonDesTenebres;
+import Donjon.CreationDonjon.DonjonDesTrolls;
 import Jeu.Mecanismes.Carte;
 import Jeu.Mecanismes.parcoursCarte;
 import Jeu.Mecanismes.parcoursDonjon;
@@ -85,24 +87,14 @@ public class MenuPrincipal {
         personnages.add(personnage);
 
         // Placer l'entrée du donjon à une position à droite du joueur sur la carte
-        int nouvellePosXDonjon = carte.joueurX + 1; // Position en X de l'entrée du donjon
-        int posYDonjon = carte.joueurY; // La position en Y de l'entrée du donjon est la même que celle du joueur
-
-        // Vérifiez d'abord si les nouvelles coordonnées sont valides
-        if (carte.coordValides(nouvellePosXDonjon, posYDonjon)) {
-            // Mettez à jour la carte pour placer l'entrée du donjon à la nouvelle position
-            carte.carte[nouvellePosXDonjon][posYDonjon] = 'D'; // 'D' représente l'entrée du donjon
-        } else {
-            System.out.println("Les coordonnées spécifiées ne sont pas valides.");
-        }
+        DonjonDesTenebres.entreeDonjon(carte);
+        DonjonDesTrolls.entreeDonjon(carte);
 
         Design.effacerConsole();
         Design.titreAffichage_1("Vous avez choisi la classe " + nomClasse + " pour le personnage " + nomPerso + ".");
 
         scanner.nextLine();
         Design.effacerConsole();
-
-        afficherCarte(carte);
 
         return personnage;
     }
@@ -197,11 +189,6 @@ public class MenuPrincipal {
                 Design.effacerConsole();
             }
         }
-    }
-
-    public static void afficherCarte(Carte carte) {
-        Design.titreAffichage_2("Voici la carte du jeu :");
-        carte.afficherCarte();
     }
 
     public static void menuPrincipal(Scanner scanner, ArrayList<Personnage> personnages) {

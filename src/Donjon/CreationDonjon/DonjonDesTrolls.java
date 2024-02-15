@@ -9,8 +9,8 @@ import Salles.Salle;
 
 import java.util.ArrayList;
 
-public class DonjonDesTenebres {
-    private static int entreeX = 6;
+public class DonjonDesTrolls {
+    private static int entreeX = 7;
     private static int entreeY = 5;
 
     private static Salle creerSalle(String nomSalle, Object[] ennemis, String nomBoss, int hpBoss, int attaqueBoss, int defenseBoss) {
@@ -40,12 +40,10 @@ public class DonjonDesTenebres {
         // Création des salles
         donjonSalles.add(creerSalle("Salle 1", new Object[]{"Gobelin", 70, 23, 15, "Tofu", 80, 25, 14}, null, 0, 0, 0));
         donjonSalles.add(creerSalle("Salle 2", new Object[]{"Bouftou", 90, 27, 13, "Sanglier", 100, 30, 11}, null, 0, 0, 0));
-        donjonSalles.add(creerSalle("Salle 3", new Object[]{"Ours", 110, 32, 9, "Troll", 130, 35, 10}, null, 0, 0, 0));
-        donjonSalles.add(creerSalle("Salle 4", new Object[]{"Dragon", 140, 37, 8}, null, 0, 0, 0));
-        donjonSalles.add(creerSalle("Salle Boss", new Object[]{"Hydra", 80, 20, 10, "Elfe noir", 80, 20, 10}, "Dieu Déchu", 180, 40, 7));
+        donjonSalles.add(creerSalle("Salle Boss", new Object[]{}, "Dieu Déchu", 180, 40, 7));
 
         Arme reward = new Arme("Epée légendaire", 50, 0);
-        return new Donjon("Donjon des Ténèbres", donjonSalles, reward);
+        return new Donjon("Donjon des Trolls", donjonSalles, reward);
     }
 
     public static void entreeDonjon(Carte carte) {
@@ -55,7 +53,7 @@ public class DonjonDesTenebres {
         // Vérifiez d'abord si les nouvelles coordonnées sont valides
         if (carte.coordValides(posXDonjon, posYDonjon)) {
             // Mettez à jour la carte pour placer l'entrée du donjon à la nouvelle position
-            carte.carte[posXDonjon][posYDonjon] = 'D'; // 'D' représente l'entrée du donjon
+            carte.carte[posXDonjon][posYDonjon] = 'E'; // 'E' représente l'entrée du donjon
         } else {
             System.out.println("Les coordonnées spécifiées pour l'entrée du donjon ne sont pas valides.");
         }
